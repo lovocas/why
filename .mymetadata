@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="why"
+  id="myeclipse.1305796339090"
+  context-root="/why"
+  j2ee-spec="5.0"
+  archive="why.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
