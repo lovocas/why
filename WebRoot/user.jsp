@@ -22,7 +22,7 @@
         <!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	--->
-        <script type="text/javascript">
+    <script type="text/javascript">
 	function follow(viewd, user, divObject) {
 		var url = "FollowUser?viewedid=" + viewd + "&" + "uid=" + user;
 		if (window.XMLHttpRequest) {
@@ -49,8 +49,7 @@
 				if ("ok" == respText) {
 					document.getElementById("followorno").innerHTML = "取消关注";
 				}
-
-			}
+}
 		}
 	}
 	
@@ -83,7 +82,8 @@
             %>
             你已经关注他了
             <%
-                }}else{
+                }
+            			} else {
             %>
             你访问的用户不存在
             <%
