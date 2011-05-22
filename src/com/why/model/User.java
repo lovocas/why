@@ -143,10 +143,15 @@ public class User {
 
     
     
-
+    
+    
+    
+    
+    
     public void followPerson(User user) {
         this.following.add(user);
         user.followers.add(this);
+        
     }
     
     public void unfollowPerson(User user) {
@@ -163,6 +168,8 @@ public class User {
         ask.setTitle(title);
         ask.setBody(content);
         ask.setAuthorId(this.getId());
+        ask.setLastModifiedAt(new Date());
+        ask.setAuthorId(this.id);
         this.asks_count ++;
         AskDAO dao = new AskDAO(DB.morphia, DB.mongo);
         dao.save(ask);

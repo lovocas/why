@@ -14,6 +14,11 @@ public class Topic {
     private String summery;//介绍
     private int asks_count;
     
+    
+    public Topic() {
+        this.asks_count = 0;
+    }
+    
     @Reference
     private List<User> followers;
 
@@ -54,8 +59,6 @@ public class Topic {
         TopicDAO dao = new TopicDAO(DB.morphia, DB.mongo);
         return (Topic)dao.findOne("name", name);
     }
-    
-    
     public static boolean AddTopic(Topic aTopic, User u) {
         if(aTopic != null && !"".equals(aTopic.getName()) && null==findByName(aTopic.name)) {
             TopicDAO dao = new TopicDAO(DB.morphia, DB.mongo);

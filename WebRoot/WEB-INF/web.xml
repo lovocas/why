@@ -30,6 +30,21 @@
     <servlet-name>ViewAskServlet</servlet-name>
     <servlet-class>com.why.servlet.ViewAskServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ViewUserServlet</servlet-name>
+    <servlet-class>com.why.servlet.ViewUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>FollowUserServlet</servlet-name>
+    <servlet-class>com.why.servlet.FollowUserServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ViewAllUserServlet</servlet-name>
+    <servlet-class>com.why.servlet.ViewAllUserServlet</servlet-class>
+  </servlet>
+
+
+
 
 
 
@@ -55,6 +70,18 @@
   <servlet-mapping>
     <servlet-name>ViewAskServlet</servlet-name>
     <url-pattern>/ViewAskServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewUserServlet</servlet-name>
+    <url-pattern>/viewuser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FollowUserServlet</servlet-name>
+    <url-pattern>/FollowUser</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewAllUserServlet</servlet-name>
+    <url-pattern>/ViewAllUserServlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
