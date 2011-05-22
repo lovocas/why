@@ -4,11 +4,14 @@ import java.util.List;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Reference;
+import com.why.dao.TopicDAO;
+import com.why.util.DB;
 
 
-@Entity
+@Entity(value="topics")
 public class Topic {
     private String name;
+    private String summery;//介绍
     private int asks_count;
     
     @Reference
@@ -37,6 +40,28 @@ public class Topic {
     public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
+
+    public String getSummery() {
+        return summery;
+    }
+
+    public void setSummery(String summery) {
+        this.summery = summery;
+    }
     
     
+    private static Topic findByName(String name) {
+        TopicDAO dao = new TopicDAO(DB.morphia, DB.mongo);
+        return (Topic)dao.findOne("name", name);
+    }
+    
+    
+    public static boolean AddTopic(Topic aTopic, User u) {
+        if(aTopic != null && !"".equals(aTopic.getName()) && null==findByName(aTopic.name)) {
+            TopicDAO dao = new TopicDAO(DB.morphia, DB.mongo);
+            dao.save(aTopic);
+            return true;
+        }
+        return false;
+    }
 }

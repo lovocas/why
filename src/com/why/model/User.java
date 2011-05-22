@@ -4,48 +4,50 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-
 import org.bson.types.ObjectId;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
+import com.why.dao.AskDAO;
 import com.why.util.DB;
 
-@Entity
+
+/**
+ * @author TeaInCoffee
+ * lastModified: 2011-05-22 14:04
+ * common user
+ */
+@Entity(value="users")
 public class User {
     
-    @Id ObjectId id;
-    private String username;
+    @Id ObjectId id;//mongodb 自动处理的ID
+    
+    private String username; 
     private String email;
     private String password;
     private String bio;//simple self introduction  (biography)
+    private String tagline; //more simple introduce your self 
     private String website; //personal website
     private boolean isMale;//gender
 
-
-    //fllow的
-    //private ObjectId[] followedAskIds; //
-    //private ObjectId[] answeredAskIds;
-    //问问题的数量
     private int asks_count;
-
-
-    //sns
-    //person network
-    //和前面的id是重复的，空间来提高查询效率
+    //虽然保存单向关系可以处理，但是造成查询麻烦
+    
+    
+    //所以牺牲完整性，每次关系的更新都要修改这两个list
     @Reference
     private List<User> following;
     @Reference
     private List<User> followers;
 
-    //ask and user network
+    
+    
     @Reference
-    private List<Ask> followedAsks;
+    private List<Ask> followedAsks;//关注的问题
     @Reference
-    private List<Topic> followedTopics;
-
+    private List<Topic> followedTopics;//关注的话题
+    
 
     public User() {
         following = new ArrayList<User>();
@@ -132,8 +134,16 @@ public class User {
     public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
+    public String getTagline() {
+        return tagline;
+    }
+    public void setTagline(String tagline) {
+        this.tagline = tagline;
+    }
+
     
     
+
     public void followPerson(User user) {
         this.following.add(user);
         user.followers.add(this);
@@ -147,16 +157,33 @@ public class User {
         }
         
     }
-    public void askQuestion(String title, String content, ServletContext context) {
+    public ObjectId askQuestion(String title, String content) {
         Ask ask = new Ask();
         ask.setLastModifiedAt(new Date());
         ask.setTitle(title);
         ask.setBody(content);
         ask.setAuthorId(this.getId());
         this.asks_count ++;
-        
-        DB.getDatastore(context).save(ask);
-        DB.getDatastore(context).save(this);
+        AskDAO dao = new AskDAO(DB.morphia, DB.mongo);
+        dao.save(ask);
+        System.out.println(ask.getId() + "问题保存到数据库了，" + this.username + "问的");
+        DB.ds.save(this);
+        return ask.getId();
     }
+    
+    public void followTopic(Topic topic) {
+        followedTopics.add(topic);
+        topic.getFollowers().add(this);
+        DB.ds.save(topic);
+        DB.ds.save(this);
+    }
+    
+    public void unfollowTopic(Topic topic) {
+        followedTopics.remove(topic);
+        topic.getFollowers().remove(this);
+        DB.ds.save(topic);
+        DB.ds.save(this);
+    }
+    
     
 }

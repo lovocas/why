@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</head>
 
 	<body>
-		<form action="SubmitAsk">
+		<form action="SubmitAsk" method="post">
 			问题：
 			<input type="text" name="title">
 			<br>
@@ -28,10 +28,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<textarea rows="8" cols="30" name="content"></textarea>
 			<input type="submit" />
 		</form>
-
-
-
-
 
 
 

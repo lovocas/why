@@ -1,11 +1,17 @@
 package com.why.util;
 
-import javax.servlet.ServletContext;
-
 import com.google.code.morphia.Datastore;
+import com.google.code.morphia.Morphia;
+import com.mongodb.Mongo;
 
 public class DB {
-    public static Datastore getDatastore(ServletContext context) {
-        return (Datastore)context.getAttribute("datastore");
+    
+    
+    public static Mongo mongo;
+    public static Morphia morphia;
+    public static Datastore ds;
+    
+    private DB() throws Exception {
+        throw new Exception("你用的是反射吗");
     }
 }

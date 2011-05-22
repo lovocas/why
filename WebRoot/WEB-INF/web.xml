@@ -26,6 +26,11 @@
     <servlet-name>QuestionsServlet</servlet-name>
     <servlet-class>com.why.servlet.QuestionsServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ViewAskServlet</servlet-name>
+    <servlet-class>com.why.servlet.ViewAskServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -46,6 +51,10 @@
   <servlet-mapping>
     <servlet-name>QuestionsServlet</servlet-name>
     <url-pattern>/Questions</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ViewAskServlet</servlet-name>
+    <url-pattern>/ViewAskServlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

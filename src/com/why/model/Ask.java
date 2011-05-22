@@ -7,36 +7,58 @@ import java.util.List;
 import org.bson.types.ObjectId;
 
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Reference;
 
 
-@Entity
+@Entity(value="asks")
 public class Ask {
+    
+    @Id private ObjectId id;
+    public ObjectId getId() {
+        return id;
+    }
+
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
     private String title;
     private String body;
     private ObjectId authorId;
     //问题被修改的时间
     private Date lastModifiedAt; 
-    
     //最后一次被回答的时间
     private Date answeredAt;
-    
-    
+
+
     private int answersCount;
     private int spamCount;//被举报垃圾问题数量
-    
-    
+
+
     private List<Topic> topics;
     private int viewCount;
-    
-    
+    @Reference
+    private User author;
+
+    public User getAuthor() {
+        return author;
+    }
+
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
+
     public Ask() {
         answersCount = 0;
         spamCount = 0;
         topics = new ArrayList<Topic>();
         viewCount = 0;
     }
-    
-    
+
+
     public ObjectId getAuthorId() {
         return authorId;
     }
@@ -95,15 +117,6 @@ public class Ask {
     public void setViewCount(int viewCount) {
         this.viewCount = viewCount;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
 }

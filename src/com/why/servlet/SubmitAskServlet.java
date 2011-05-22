@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bson.types.ObjectId;
+
 import com.why.model.User;
 
 public class SubmitAskServlet extends HttpServlet {
@@ -14,7 +16,17 @@ public class SubmitAskServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException {
-
+        process(req, resp);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        process(req, resp);
+    }
+    private void process(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
+        System.out.println("dadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa===111+");
         String title = req.getParameter("title");
         String content = req.getParameter("content");
         User u = (User)(req.getSession().getAttribute("user"));
@@ -26,9 +38,9 @@ public class SubmitAskServlet extends HttpServlet {
         }
         
         if(null != title &&title.length() > 10) {
-            u.askQuestion(title, content, req.getSession().getServletContext());
-            
-            req.getRequestDispatcher("Questions").forward(req, resp);
+            ObjectId id = u.askQuestion(title, content);
+            req.setAttribute("askid", id);
+            req.getRequestDispatcher("ViewAskServlet").forward(req, resp);
         }
     }
 }
