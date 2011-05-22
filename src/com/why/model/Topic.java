@@ -2,7 +2,10 @@ package com.why.model;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
+
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
 import com.why.dao.TopicDAO;
 import com.why.util.DB;
@@ -10,6 +13,8 @@ import com.why.util.DB;
 
 @Entity(value="topics")
 public class Topic {
+    
+    @Id private ObjectId id;
     private String name;
     private String summery;//介绍
     private int asks_count;
@@ -55,6 +60,14 @@ public class Topic {
     }
     
     
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     private static Topic findByName(String name) {
         TopicDAO dao = new TopicDAO(DB.morphia, DB.mongo);
         return (Topic)dao.findOne("name", name);
@@ -67,4 +80,5 @@ public class Topic {
         }
         return false;
     }
+    
 }

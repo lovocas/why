@@ -9,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'users.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,19 +19,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-   <% User u = (User)session.getAttribute("user");
-   if(null != u) {
-   %>
-   欢迎你<%= u.getUsername() %><br>
-   <a href="createAsk.jsp">我有蛋疼的问题要问</a><br>
-   <a href="viewalluser"><font color="red">查看</font></a>哪些人也在使用知也
-   <%}
-   else {
-   %>
-   你个2货没有<a href="login.jsp">登录</a>！！！！！！！！！！！！
-   <%} %>
+    <% List<User> users = (List<User>)request.getAttribute("users");
+      for(User u: users) {
+    %>
+    <a href="viewuser?userid=<%=u.getId() %>"><%=u.getUsername() %> and <br>
+    <font color="red"><%=u.getId().toString() %></font></a><br>
+    <%} %>
   </body>
 </html>

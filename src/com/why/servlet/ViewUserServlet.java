@@ -19,7 +19,7 @@ public class ViewUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
     throws ServletException, IOException {
         try{
-            ObjectId id = new ObjectId(req.getParameter("askid"));
+            ObjectId id = new ObjectId(req.getParameter("userid"));
             
             UserDAO dao = new UserDAO(DB.morphia, DB.mongo);
             
@@ -27,6 +27,7 @@ public class ViewUserServlet extends HttpServlet {
             
             if(null != user) {
                 req.setAttribute("vieweduser", user);
+                System.out.println(user.getUsername());
             }
             
         }

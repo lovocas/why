@@ -10,6 +10,7 @@ import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
 import com.why.dao.AskDAO;
+import com.why.dao.UserDAO;
 import com.why.util.DB;
 
 
@@ -143,14 +144,13 @@ public class User {
 
     
     
-    
-    
-    
-    
-    
     public void followPerson(User user) {
         this.following.add(user);
         user.followers.add(this);
+        
+        UserDAO dao = new UserDAO(DB.morphia, DB.mongo);
+        dao.save(this);
+        dao.save(user);
         
     }
     
@@ -192,5 +192,15 @@ public class User {
         DB.ds.save(this);
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || !(obj instanceof User)) return false;
+        User otherUser = (User)obj;
+        return this.id.equals(otherUser.id);
+    }
     
+    @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
 }
